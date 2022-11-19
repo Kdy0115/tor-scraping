@@ -1,0 +1,24 @@
+version: "3"
+services:
+  scraping:
+    container_name: scraping
+    build: .
+    volumes:
+      - ./:/app/
+      - /var/run/docker.sock:/var/run/docker.sock      
+    networks:
+      - goo-scraping-net      
+    tty: true
+
+  proxy:
+    container_name: proxy
+    image: dperson/torproxy
+    tty: true
+    networks:
+      - goo-scraping-net        
+    ports:
+      - 8118:8118
+      - 9050:9050
+
+networks:
+  goo-scraping-net:            
